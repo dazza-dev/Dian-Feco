@@ -1,0 +1,66 @@
+# DIAN FECO
+
+Paquete para enviar documentos electrónicos (Facturas, Notas Crédito y Notas Débito) a la DIAN.
+
+## Instalación
+
+```bash
+composer require dazza-dev/dian-feco
+```
+
+## Configuración
+
+```php
+use DazzaDev\DianFeco\Client;
+
+$client = new Client(test: true); // true or false
+
+$client->setSoftware([
+    'identifier' => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+    'test_set_id' => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+    'pin' => 'pin_software',
+]);
+
+$client->setCertificate([
+    'path' => _DIR_ . '/certificado.p12',
+    'password' => 'clave_certificado',
+]);
+
+// Ruta donde se guardarán los archivos xml y zip
+$client->setFilePath(_DIR_ . '/feco');
+```
+
+## Uso
+
+### Enviar un documento electrónico (factura, nota de débito o nota de crédito)
+
+La estructura de los datos de la factura la puedes encontrar en: [dazza-dev/dian-xml-generator](https://github.com/dazza-dev/dian-xml-generator).
+
+```php
+$client->setDocumentType('invoice'); // Tipo de documento ('invoice', 'debit-note', 'credit-note')
+$client->setDocumentData($documentData); // Datos del documento
+
+$client->setTechnicalKey('clave_tecnica'); // Clave técnica (Solo para facturas)
+
+$document = $client->sendDocument();
+```
+
+### Obtener las numeraciones
+
+Después de asignar los prefijos dentro del modulo Facturando electrónicamente de la [DIAN](https://catalogo-vpfe.dian.gov.co/User/Login), puedes obtener las numeraciones asi:
+
+```php
+$numberingRange = $client->getNumberingRange('nit_emisor');
+```
+
+## Contribuciones
+
+Contribuciones son bienvenidas. Si encuentras algún error o tienes ideas para mejoras, por favor abre un issue o envía un pull request. Asegúrate de seguir las guías de contribución.
+
+## Autor
+
+DIAN FECO fue creado por [DAZZA](https://github.com/dazza-dev).
+
+## Licencia
+
+Este proyecto está licenciado bajo la [Licencia MIT](https://opensource.org/licenses/MIT).

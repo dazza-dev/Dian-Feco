@@ -1,0 +1,38 @@
+{
+  "name": "dazza-dev/dian-feco",
+  "description": "Paquete para enviar documentos electrónicos (Facturas, Notas Crédito y Notas Débito) a la DIAN.",
+  "keywords": [
+    "dian",
+    "feco",
+    "factura electrónica"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.0",
+    "lopezsoft/ubl21dian": "^3.2",
+    "dazza-dev/dian-xml-generator": "^1.0"
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "Andres Daza",
+      "email": "adaza90@outlook.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "DazzaDev\\DianFeco\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DazzaDev\\DianFeco\\Tests\\": "tests/"
+    }
+  }
+}
