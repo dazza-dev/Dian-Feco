@@ -4,6 +4,7 @@ namespace DazzaDev\DianFeco;
 
 use DazzaDev\DianFeco\Actions\AttachedDocument;
 use DazzaDev\DianFeco\Actions\Document;
+use DazzaDev\DianFeco\Actions\GetDocumentById;
 use DazzaDev\DianFeco\Actions\NumberingRange;
 use DazzaDev\DianFeco\Actions\StatusEvent;
 use DazzaDev\DianFeco\Actions\ZipStatus;
@@ -22,6 +23,7 @@ class Client
     use Certificate;
     use Document;
     use File;
+    use GetDocumentById;
     use NumberingRange;
     use Software;
     use StatusEvent;
