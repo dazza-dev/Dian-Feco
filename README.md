@@ -53,6 +53,14 @@ Después de asignar los prefijos dentro del modulo Facturando electrónicamente 
 $numberingRange = $client->getNumberingRange('nit_emisor');
 ```
 
+### Obtener los eventos de un documento
+
+Después de enviar un documento electrónico, puedes obtener los eventos de ese documento asi:
+
+```php
+$events = $client->getStatusEvent('cufe/cude_documento');
+```
+
 ## Contribuciones
 
 Contribuciones son bienvenidas. Si encuentras algún error o tienes ideas para mejoras, por favor abre un issue o envía un pull request. Asegúrate de seguir las guías de contribución.

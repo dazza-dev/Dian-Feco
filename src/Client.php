@@ -5,6 +5,7 @@ namespace DazzaDev\DianFeco;
 use DazzaDev\DianFeco\Actions\AttachedDocument;
 use DazzaDev\DianFeco\Actions\Document;
 use DazzaDev\DianFeco\Actions\NumberingRange;
+use DazzaDev\DianFeco\Actions\StatusEvent;
 use DazzaDev\DianFeco\Actions\ZipStatus;
 use DazzaDev\DianFeco\Traits\Certificate;
 use DazzaDev\DianFeco\Traits\File;
@@ -23,6 +24,7 @@ class Client
     use File;
     use NumberingRange;
     use Software;
+    use StatusEvent;
     use ZipStatus;
 
     /**
@@ -157,5 +159,35 @@ class Client
     public function getUniqueCode(): ?string
     {
         return $this->uniqueCode;
+    }
+
+    /**
+     * Get errors
+     */
+    public function getErrors(): array
+    {
+        $errors = [];
+        if (isset($this->responseDian->ErrorMessage->string)) {
+            $errorsList = $this->responseDian->ErrorMessage->string;
+            $errors = (is_array($errorsList)) ? $errorsList : [$errorsList];
+        }
+
+        return $errors;
+    }
+
+    /**
+     * Get status message
+     */
+    public function getStatusMessage(): string
+    {
+        return is_string($this->responseDian->StatusMessage) ? $this->responseDian->StatusMessage : '';
+    }
+
+    /**
+     * Is valid
+     */
+    public function isValid(): bool
+    {
+        return filter_var($this->responseDian->IsValid, FILTER_VALIDATE_BOOLEAN);
     }
 }

@@ -69,16 +69,6 @@ trait Document
                 ->SendBillSyncResult;
         }
 
-        // Status Message
-        $statusMessage = is_string($this->responseDian->StatusMessage) ? $this->responseDian->StatusMessage : '';
-
-        // Format Errors
-        $errors = [];
-        if (isset($this->responseDian->ErrorMessage->string)) {
-            $errorsList = $this->responseDian->ErrorMessage->string;
-            $errors = (is_array($errorsList)) ? $errorsList : [$errorsList];
-        }
-
         // Set unique code
         $uniqueCode = $this->documentType == 'invoice'
             ? $signDocument->ConsultarCUFEEVENT()
@@ -87,16 +77,16 @@ trait Document
         $this->setUniqueCode($uniqueCode);
 
         // Generate Attached XML
-        if ($isValid = filter_var($this->responseDian->IsValid, FILTER_VALIDATE_BOOLEAN)) {
+        if ($this->isValid()) {
             $this->generateAttachedDocument();
         }
 
         return [
-            'isValid' => $isValid,
+            'isValid' => $this->isValid(),
             'StatusCode' => $this->responseDian->StatusCode,
             'StatusDescription' => $this->responseDian->StatusDescription,
-            'StatusMessage' => $statusMessage,
-            'ErrorMessage' => $errors,
+            'StatusMessage' => $this->getStatusMessage(),
+            'ErrorMessage' => $this->getErrors(),
             'Cufe' => $this->getUniqueCode(),
             'ZipBase64Bytes' => $this->zipBase64Bytes,
             'XmlName' => $this->getXmlFileName(),
