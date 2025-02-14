@@ -40,7 +40,7 @@ trait NumberingRange
     /**
      * Format the numbering ranges
      */
-    private function formatNumberingRanges(array $numberingRangeResponse): array
+    private function formatNumberingRanges($numberingRangeResponse): array
     {
         // Convert to array if there is only one numbering range
         if (is_countable($numberingRangeResponse)) {
@@ -48,7 +48,7 @@ trait NumberingRange
                 $numberingRanges[] = (array) $numberingRange;
             }
         } else {
-            $numberingRanges = (array) $numberingRangeResponse;
+            $numberingRanges[] = (array) $numberingRangeResponse;
         }
 
         // Map the numbering ranges
