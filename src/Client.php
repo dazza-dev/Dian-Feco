@@ -14,6 +14,7 @@ use DazzaDev\DianFeco\Traits\Software;
 use DazzaDev\DianXmlGenerator\Enums\Environments;
 use DazzaDev\DianXmlGenerator\Models\CreditNote\CreditNote;
 use DazzaDev\DianXmlGenerator\Models\DebitNote\DebitNote;
+use DazzaDev\DianXmlGenerator\Models\Event\Event;
 use DazzaDev\DianXmlGenerator\Models\Invoice\Invoice;
 use DOMDocument;
 
@@ -52,7 +53,7 @@ class Client
     /**
      * Document
      */
-    private Invoice|CreditNote|DebitNote $document;
+    private Invoice|CreditNote|DebitNote|Event $document;
 
     /**
      * Document XML
