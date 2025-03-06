@@ -88,7 +88,13 @@ trait File
     {
         $number = $this->document->getNumber();
         $prefix = $this->document->getDocumentType()->getCodeType();
-        $companyIdentificationNumber = $this->document->getCompany()->getIdentificationNumber();
+
+        // Document Number by type
+        if ($prefix == 'ar') {
+            $companyIdentificationNumber = $this->document->getReceiver()->getIdentificationNumber();
+        } else {
+            $companyIdentificationNumber = $this->document->getCompany()->getIdentificationNumber();
+        }
 
         //
         return $prefix.
