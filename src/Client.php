@@ -49,11 +49,6 @@ class Client
     protected ?string $technicalKey;
 
     /**
-     * Document data
-     */
-    private array $documentData;
-
-    /**
      * Document
      */
     private Invoice|SupportDocument|CreditNote|DebitNote|Event $document;

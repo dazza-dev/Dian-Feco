@@ -13,7 +13,15 @@ use Lopezsoft\UBL21dian\XAdES\SignInvoice;
 
 trait Document
 {
+    /**
+     * Document type
+     */
     private string $documentType;
+
+    /**
+     * Document data
+     */
+    private array $documentData;
 
     /**
      * Send document
