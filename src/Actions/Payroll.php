@@ -61,7 +61,7 @@ trait Payroll
             ->SendNominaSyncResult;
 
         // Set unique code
-        $uniqueCode = $this->responseDian?->XmlDocumentKey;
+        $uniqueCode = $signDocument->getCUNE();
 
         $this->setUniqueCode($uniqueCode);
 
@@ -79,7 +79,7 @@ trait Payroll
             'Cufe' => $this->getUniqueCode(),
             'ZipBase64Bytes' => $this->zipBase64Bytes,
             'XmlName' => $this->getXmlFileName(),
-            // 'QrCode' => base64_encode($signDocument->getQRData()),
+            'QrCode' => base64_encode($signDocument->getQRData()),
         ];
     }
 
