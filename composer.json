@@ -10,7 +10,7 @@
   "license": "MIT",
   "require": {
     "php": ">=8.0",
-    "lopezsoft/ubl21dian": "^3.4",
+    "lopezsoft/ubl21dian": "^3.5",
     "dazza-dev/dian-xml-generator": "^1.0"
   },
   "config": {

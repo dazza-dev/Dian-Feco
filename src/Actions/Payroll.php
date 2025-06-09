@@ -5,6 +5,7 @@ namespace DazzaDev\DianFeco\Actions;
 use DazzaDev\DianFeco\Exceptions\DocumentException;
 use DazzaDev\DianXmlGenerator\Builders\PayrollBuilder;
 use Lopezsoft\UBL21dian\Templates\SOAP\SendNominaSync;
+use Lopezsoft\UBL21dian\Templates\SOAP\SendTestSetAsync;
 use Lopezsoft\UBL21dian\XAdES\SignPayroll;
 
 trait Payroll
@@ -31,10 +32,17 @@ trait Payroll
         $this->generateZipFile();
 
         // Send document
-        $sendDocument = new SendNominaSync(
-            $this->getCertificatePath(),
-            $this->getCertificatePassword()
-        );
+        if ($this->getSoftwareTestSetId()) {
+            $sendDocument = new SendTestSetAsync(
+                $this->getCertificatePath(),
+                $this->getCertificatePassword()
+            );
+        } else {
+            $sendDocument = new SendNominaSync(
+                $this->getCertificatePath(),
+                $this->getCertificatePassword()
+            );
+        }
         $sendDocument->To = $this->getEnvironmentUrl();
         $sendDocument->fileName = $this->document->getFullNumber().'.xml';
         $sendDocument->contentFile = $this->zipBase64Bytes;
@@ -57,18 +65,20 @@ trait Payroll
         }
 
         // Validate Response
-        $this->responseDian = $responseDian->SendNominaSyncResponse
-            ->SendNominaSyncResult;
+        if ($this->getSoftwareTestSetId()) {
+            $zipKey = $responseDian->SendTestSetAsyncResponse
+                ->SendTestSetAsyncResult
+                ->ZipKey;
+            $this->responseDian = $this->validateZipStatus($zipKey);
+        } else {
+            $this->responseDian = $responseDian->SendNominaSyncResponse
+                ->SendNominaSyncResult;
+        }
 
         // Set unique code
         $uniqueCode = $signDocument->getCUNE();
 
         $this->setUniqueCode($uniqueCode);
-
-        // Generate Attached XML
-        if ($this->isValid()) {
-            $this->generateAttachedDocument();
-        }
 
         return [
             'isValid' => $this->isValid(),
