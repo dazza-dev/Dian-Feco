@@ -91,10 +91,15 @@ trait File
 
         // Document Number by type
         if ($prefix == 'ar') {
-            $companyIdentificationNumber = $this->document->getReceiver()->getIdentificationNumber();
+            $company = $this->document->getReceiver();
+        } elseif ($prefix == 'nie' || $prefix == 'niae') {
+            $company = $this->document->getEmployer();
         } else {
-            $companyIdentificationNumber = $this->document->getCompany()->getIdentificationNumber();
+            $company = $this->document->getCompany();
         }
+
+        // Company Identification Number
+        $companyIdentificationNumber = $company->getIdentificationNumber();
 
         //
         return $prefix.

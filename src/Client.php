@@ -6,6 +6,7 @@ use DazzaDev\DianFeco\Actions\AttachedDocument;
 use DazzaDev\DianFeco\Actions\Document;
 use DazzaDev\DianFeco\Actions\GetDocumentById;
 use DazzaDev\DianFeco\Actions\NumberingRange;
+use DazzaDev\DianFeco\Actions\Payroll as PayrollAction;
 use DazzaDev\DianFeco\Actions\StatusEvent;
 use DazzaDev\DianFeco\Actions\ZipStatus;
 use DazzaDev\DianFeco\Traits\Certificate;
@@ -18,6 +19,8 @@ use DazzaDev\DianXmlGenerator\Models\DebitNote\DebitNote;
 use DazzaDev\DianXmlGenerator\Models\Event\Event;
 use DazzaDev\DianXmlGenerator\Models\Invoice\Invoice;
 use DazzaDev\DianXmlGenerator\Models\Invoice\SupportDocument;
+use DazzaDev\DianXmlGenerator\Models\Payroll\AdjustmentNote;
+use DazzaDev\DianXmlGenerator\Models\Payroll\Payroll;
 use DOMDocument;
 
 class Client
@@ -29,6 +32,7 @@ class Client
     use GetDocumentById;
     use Listing;
     use NumberingRange;
+    use PayrollAction;
     use Software;
     use StatusEvent;
     use ZipStatus;
@@ -51,7 +55,7 @@ class Client
     /**
      * Document
      */
-    private Invoice|SupportDocument|CreditNote|DebitNote|Event $document;
+    private Invoice|SupportDocument|CreditNote|DebitNote|Event|Payroll|AdjustmentNote $document;
 
     /**
      * Document XML
