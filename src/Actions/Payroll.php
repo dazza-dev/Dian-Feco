@@ -7,6 +7,7 @@ use DazzaDev\DianXmlGenerator\Builders\PayrollBuilder;
 use Lopezsoft\UBL21dian\Templates\SOAP\SendNominaSync;
 use Lopezsoft\UBL21dian\Templates\SOAP\SendTestSetAsync;
 use Lopezsoft\UBL21dian\XAdES\SignPayroll;
+use Lopezsoft\UBL21dian\XAdES\SignPayrollAdjustment;
 
 trait Payroll
 {
@@ -98,8 +99,21 @@ trait Payroll
      */
     public function signPayroll()
     {
+        $payrollClasses = [
+            'individual' => SignPayroll::class,
+            'adjustment-note' => SignPayrollAdjustment::class,
+        ];
+
+        // Validate payroll type
+        if (! isset($payrollClasses[$this->payrollType])) {
+            throw new DocumentException('Document type not supported');
+        }
+
+        // Get payroll class
+        $signPayrollClass = $payrollClasses[$this->payrollType];
+
         // Create payroll
-        $signDocument = new SignPayroll(
+        $signDocument = new $signPayrollClass(
             $this->getCertificatePath(),
             $this->getCertificatePassword()
         );
