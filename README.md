@@ -45,6 +45,17 @@ $client->setTechnicalKey('clave_tecnica'); // Clave técnica (Solo para facturas
 $document = $client->sendDocument();
 ```
 
+### Enviar nomina electrónica (individual, nota de ajuste reemplazo o eliminación)
+
+La estructura de los datos de nomina la puedes encontrar en: [dazza-dev/dian-xml-generator](https://github.com/dazza-dev/dian-xml-generator).
+
+```php
+$client->setPayrollType('individual'); // Tipo de nomina ('individual', 'adjustment-note')
+$client->setPayrollData($payrollData); // Datos de la nomina
+
+$payroll = $client->sendPayroll();
+```
+
 ### Obtener las numeraciones
 
 Después de asignar los prefijos dentro del modulo Facturando electrónicamente de la [DIAN](https://catalogo-vpfe.dian.gov.co/User/Login), puedes obtener las numeraciones asi:
